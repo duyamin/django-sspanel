@@ -1,5 +1,6 @@
 import json
 import base64
+import binascii
 from urllib import parse
 
 from django.urls import reverse
@@ -122,7 +123,7 @@ def subscribe(request):
     if token:
         try:
             username = base64.b64decode(token[0]).decode()
-        except TypeError:
+        except binascii.Error:
             return JsonResponse(status_code=404)
     else:
         return JsonResponse(status_code=404)
